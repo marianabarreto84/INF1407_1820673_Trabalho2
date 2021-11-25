@@ -1,0 +1,78 @@
+.fundo-total{
+    background-color:rgba(255, 235, 204, 0.829);
+}
+
+.fundo-navbar{
+    background-color:rgba(62, 39, 4, 0.864);
+}
+
+.titulo-navbar{
+    font-family: 'Outfit', sans-serif;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.navbar-login{
+    margin-right: 8% !important;
+}
+
+.fonte-outfit{
+    font-family: 'Outfit', sans-serif;
+}
+.fonte-georgia{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.itens-navbar{
+    font-weight:400;
+}
+
+.itens-dropdown{
+    font-weight:500;
+    color:rgba(62, 39, 4, 0.864);
+}
+
+.botao{
+    background-color:rgba(62, 39, 4, 0.864);
+    color:white;
+}
+
+.cor-fonte-marrom{
+    color: rgba(62, 39, 4, 0.864);
+}
+
+.link{
+    color: rgba(62, 39, 4, 0.864);
+}
+
+a:hover{
+    color: rgba(62, 39, 4, 0.864);
+}
+
+.bloco-texto{
+    padding: 5% 0;
+    /* border: 3px solid green; */
+    margin: auto;
+    width: 95%;
+}
+
+.login-centralizado{
+    padding: 15% 0;
+    margin: auto;
+    width: 20%;
+    /* border: 3px solid yellow!important; */
+}
+
+.alinha-form{
+    margin: auto;
+    width: 15%;
+    padding-bottom:7%;
+}
+
+.form-padding{
+    padding-bottom:7%;
+}
+
+.texto-centralizado{
+    text-align:center;
+}
