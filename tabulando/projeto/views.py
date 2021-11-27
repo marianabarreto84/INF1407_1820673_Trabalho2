@@ -12,7 +12,7 @@ from projeto.models import Catalogo, Jogo
 
 from .auxiliar import seleciona_jogo, retorna_status
 
-from .graficos import grafico_registros_tempo
+from .graficos import grafico_registros_por_dia, grafico_editoras_mais_registradas, grafico_status_mais_registrados
 
 
 def pagina_inicial(request):
@@ -65,7 +65,10 @@ def catalogo(request):
     catalogo = Catalogo.objects.filter(usuario_id=usuario.id)
     catalogo = catalogo.annotate(nome_jogo=F('jogo__nome'))
     catalogo = catalogo.annotate(editora=F('jogo__editora'))
-    catalogo = catalogo.values('codigo', 'nome_jogo', 'editora', 'data_insercao', 'status')
+    catalogo = catalogo.annotate(codigo_jogo=F('jogo__codigo'))
+    catalogo = catalogo.values('codigo', 'nome_jogo', 'editora', 'data_insercao', 'status', 'codigo_jogo')
+
+    print(catalogo)
 
     for registro in catalogo:
         registro["status_str"] = retorna_status(registro['status'])
@@ -170,5 +173,23 @@ def verifica_nome_jogo(request):
 
 
 def estatisticas(request):
-    grafico_registros_tempo()
-    return render(request, "estatisticas.html")
+    dados_registros, labels_registros = grafico_registros_por_dia(request.user.id)
+    dados_editoras, labels_editoras = grafico_editoras_mais_registradas(request.user.id)
+    dados_status, labels_status = grafico_status_mais_registrados(request.user.id)
+    contexto = {
+        'dados_registros': dados_registros,
+        'labels_registros': labels_registros,
+        'dados_editoras': dados_editoras,
+        'labels_editoras': labels_editoras,
+        'dados_status': dados_status,
+        'labels_status': labels_status,
+    }
+    return render(request, "estatisticas.html", contexto)
+
+
+def pagina_jogo(request, codigo):
+    jogo = get_object_or_404(Jogo, codigo=codigo)
+    contexto = {
+        'jogo': jogo,
+    }
+    return render(request, "pagina_jogo.html", contexto)

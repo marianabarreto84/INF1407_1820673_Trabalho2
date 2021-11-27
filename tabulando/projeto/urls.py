@@ -17,6 +17,7 @@ urlpatterns = [
     path('registro_adicionado/', views.registro_adicionado, name='registro_adicionado'),
     path('cadastrar_jogo/', views.cadastrar_jogo, name='cadastrar_jogo'),
     path('jogo_cadastrado/', views.jogo_cadastrado, name='jogo_cadastrado'),
+    path('jogo/<int:codigo>/', views.pagina_jogo, name='pagina_jogo'),
     path('deletar_registro/<int:registro_codigo>/', views.deletar_registro, name='deletar_registro'),
     path('alterar_registro/<int:registro_codigo>/', views.alterar_registro, name='alterar_registro'),
 

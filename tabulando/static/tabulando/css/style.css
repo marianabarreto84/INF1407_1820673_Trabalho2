@@ -134,3 +134,23 @@ a:hover{
 .texto-alinhado-direita{
     text-align:end;
 }
+
+.nav-tabs {
+    border-bottom: 1px solid var(--marrom_escuro);
+}
+
+.nav-tabs .nav-item .nav-link{
+    font-weight:700;
+    color:var(--marrom_escuro);
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: var(--marrom_escuro);
+    background-color: var(--bege)!important;
+    border: 1px solid var(--marrom_escuro);
+}
+
+.centraliza-grafico{
+    padding-left:25%;
+    padding-right:25%;
+}

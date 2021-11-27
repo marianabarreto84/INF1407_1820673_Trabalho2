@@ -1,0 +1,52 @@
+<script type="text/javascript">
+    var dados = {{ dados_registros|safe }};
+    var labels = {{ labels_registros|safe }};
+
+    var data = [{
+    y: dados,
+    x: labels,
+    type: 'scatter'
+    }];
+
+    var layout = {
+    height: 400,
+    width: 500
+    };
+
+    Plotly.newPlot('registros_por_dia', data, layout);
+    
+</script>
+<script type="text/javascript">
+    var dados = {{ dados_editoras|safe }};
+    var labels = {{ labels_editoras|safe }};
+
+    var data = [{
+    values: dados,
+    labels: labels,
+    type: 'pie'
+    }];
+
+    var layout = {
+    height: 400,
+    width: 500
+    };
+
+    Plotly.newPlot('editoras_mais_registradas', data, layout);
+</script>
+<script type="text/javascript">
+    var dados = {{ dados_status|safe }};
+    var labels = {{ labels_status|safe }};
+
+    var data = [{
+    values: dados,
+    labels: labels,
+    type: 'pie'
+    }];
+
+    var layout = {
+    height: 400,
+    width: 500
+    };
+
+    Plotly.newPlot('status_mais_registrados', data, layout);
+</script>
