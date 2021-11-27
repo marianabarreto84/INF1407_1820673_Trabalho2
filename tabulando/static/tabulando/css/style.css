@@ -22,6 +22,12 @@
     color:white;
 }
 
+.alerta-vermelho{
+    color:rgb(206, 0, 0);
+    font-weight:500;
+    font-size:small;
+}
+
 .titulo-navbar{
     font-family: 'Outfit', sans-serif;
     padding-left: 2%;
@@ -121,3 +127,10 @@ a:hover{
     border:1px solid var(--marrom_tabela);
 }
 
+.coluna-alterar-status{
+    width:10%;
+}
+
+.texto-alinhado-direita{
+    text-align:end;
+}

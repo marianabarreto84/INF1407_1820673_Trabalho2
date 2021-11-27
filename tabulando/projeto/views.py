@@ -1,0 +1,174 @@
+from django.shortcuts import render
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404
+
+from django.contrib.auth.models import User
+from django.db.models import F
+from projeto.forms import CadastraUsuario, CadastraJogo, AdicionaRegistro, AlteraRegistro
+
+from projeto.models import Catalogo, Jogo
+
+from .auxiliar import seleciona_jogo, retorna_status
+
+from .graficos import grafico_registros_tempo
+
+
+def pagina_inicial(request):
+    return render(request, "pagina_inicial.html")
+
+
+def cadastrar_usuario(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('pagina_inicial'))
+
+    if request.method == 'POST':
+        form = CadastraUsuario(request.POST)
+
+        if form.is_valid():
+            user = User.objects.create_user(
+                is_active=True,
+                is_staff=False,
+                is_superuser=False,
+
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+                email=form.cleaned_data['email'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+            )
+            user.save()
+
+            return HttpResponseRedirect(reverse('usuario_criado'))
+    else:
+        form = CadastraUsuario()
+
+    contexto = {
+        'form': form
+    }
+    return render(request, "cadastrar_usuario.html", contexto)
+
+
+@login_required
+def perfil_usuario(request):
+    return render(request, "perfil_usuario.html")
+
+
+def usuario_criado(request):
+    return render(request, "usuario_criado.html")
+
+
+@login_required
+def catalogo(request):
+    usuario = request.user
+    catalogo = Catalogo.objects.filter(usuario_id=usuario.id)
+    catalogo = catalogo.annotate(nome_jogo=F('jogo__nome'))
+    catalogo = catalogo.annotate(editora=F('jogo__editora'))
+    catalogo = catalogo.values('codigo', 'nome_jogo', 'editora', 'data_insercao', 'status')
+
+    for registro in catalogo:
+        registro["status_str"] = retorna_status(registro['status'])
+
+    form = AlteraRegistro(initial={'status': registro['status']})
+
+    context = {
+        'catalogo': catalogo,
+        'form': form,
+    }
+    return render(request, "catalogo.html", context)
+
+
+@login_required
+def adicionar_registro(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('pagina_inicial'))
+
+    if request.method == 'POST':
+        form = AdicionaRegistro(request.POST)
+
+        if form.is_valid():
+            nome_jogo = form.cleaned_data["nome"]
+            id_jogo = seleciona_jogo(nome_jogo)
+            registro = Catalogo.objects.create(
+                usuario_id=request.user.id,
+                jogo_id=id_jogo,
+                status=form.cleaned_data["status"],
+            )
+            registro.save()
+            return HttpResponseRedirect(reverse('registro_adicionado'))
+    else:
+        form = AdicionaRegistro()
+
+    contexto = {
+        'form': form,
+    }
+    return render(request, "adicionar_registro.html", contexto)
+
+
+@login_required
+def registro_adicionado(request):
+    return render(request, "registro_adicionado.html")
+
+
+@login_required
+def cadastrar_jogo(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('pagina_inicial'))
+
+    if request.method == 'POST':
+        form = CadastraJogo(request.POST)
+        if form.is_valid():
+            jogo = Jogo.objects.create(
+                nome=form.cleaned_data["nome"],
+                editora=form.cleaned_data["editora"],
+                min_jogadores=form.cleaned_data["min_jogadores"],
+                max_jogadores=form.cleaned_data["max_jogadores"],
+                idade_minima=form.cleaned_data["idade_minima"],
+            )
+            jogo.save()
+            return HttpResponseRedirect(reverse('jogo_cadastrado'))
+    else:
+        form = CadastraJogo()
+    print(form)
+    contexto = {
+        'form': form,
+    }
+    return render(request, "cadastrar_jogo.html", contexto)
+
+
+@login_required
+def jogo_cadastrado(request):
+    return render(request, "jogo_cadastrado.html")
+
+
+@login_required
+def deletar_registro(request, registro_codigo):
+    if request.method == "POST":
+        registro = Catalogo.objects.get(codigo=registro_codigo)
+        registro.delete()
+    return HttpResponseRedirect(reverse('catalogo'))
+
+
+@login_required
+def alterar_registro(request, registro_codigo):
+    if request.method == "POST":
+        form = AlteraRegistro(request.POST)
+        registro = get_object_or_404(Catalogo, codigo=registro_codigo)
+        if form.is_valid():
+            registro.status = form.cleaned_data["status"]
+            registro.save()
+    return HttpResponseRedirect(reverse('catalogo'))
+
+
+def verifica_nome_jogo(request):
+    nome_jogo = request.GET.get("nome_jogo", None)
+    resposta = {
+        'existe': Jogo.objects.filter(nome__iexact=nome_jogo).exists(),
+    }
+    return JsonResponse(resposta)
+
+
+def estatisticas(request):
+    grafico_registros_tempo()
+    return render(request, "estatisticas.html")

@@ -3,8 +3,10 @@ from projeto.models import Jogo
 
 
 def seleciona_jogo(nome):
-    jogo = Jogo.objects.filter(nome=nome).all()[0]
-    return jogo.codigo
+    jogos = Jogo.objects.filter(nome=nome).all()
+    if len(jogos) == 0:
+        return None
+    return jogos[0].codigo
 
 
 def retorna_status(status):

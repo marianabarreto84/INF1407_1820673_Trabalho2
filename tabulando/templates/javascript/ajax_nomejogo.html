@@ -1,0 +1,54 @@
+<script type="text/javascript">
+// Cria o objeto XMLHTTPRequest
+function createRequest() {
+    var xmlhttp;
+    try{
+        xmlhttp = new XMLHTTPRequest(); // Presente em todos os browsers modernos, mas nem sempre foi verdade
+    }
+    catch(tryMS){
+        try{
+            xmlhttp = new ActiveXObject("Msxm12.XMLHTTP"); // Não é tão mais necessário, mas pode ajudar
+        }
+        catch(OtherMS){
+            try{
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            catch(failed){
+                xmlhttp = null; // O navegador não é compatível
+            }
+        }
+    }
+    return xmlhttp;
+}
+
+onload = function() {
+    this.document.getElementById('id_nome').addEventListener('keyup', function(e){
+        // recupera o campo do formulário
+        var campoNomeJogo = document.getElementById('id_nome');
+        console.log('Mudou', campoNomeJogo.value);
+        // cria o objeto HTTP Request e reabre a conexão
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("GET", "{% url 'verifica_nome_jogo' %}?nome_jogo=" + encodeURIComponent(campoNomeJogo.value), true);
+
+        // funcao de callback
+        xmlhttp.onreadystatechange = function () {
+            if(xmlhttp.status == 200 && xmlhttp.readyState == 4){
+                var resposta = JSON.parse(xmlhttp.responseText);
+                console.log('Resposta', resposta.existe);
+                if (resposta.existe){
+                    campoNomeJogo.style = "border 1px solid #FF0000";
+                    document.getElementById('id_mensagem_erro').replaceChild(document.createTextNode('Atenção: o jogo já existe.'), document.getElementById('id_mensagem_erro').firstChild);
+                }
+                else{
+                    campoNomeJogo.style = "border 1px solid #00FF00";
+                    document.getElementById('id_mensagem_erro').replaceChild(document.createTextNode(''), document.getElementById('id_mensagem_erro').firstChild);
+                }
+
+            }
+        }
+        // envia o request
+        xmlhttp.send(null);
+    });
+};
+</script>

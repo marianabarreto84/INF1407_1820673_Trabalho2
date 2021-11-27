@@ -1,0 +1,33 @@
+<div class="modal" id="modal_alterar_{{ registro.codigo }}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h5 class="modal-title fonte-cor-marrom">Deseja alterar o status?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </header>
+
+            <div class="modal-body">
+                </br>
+                <form class="form-horizontal" action="{% url 'alterar_registro' registro.codigo %}" method="post">
+                    {% csrf_token %}
+                    <div class="row justify-content-center">
+                        <div class="form-group col-md-8">
+                        {{ form.status.errors }}
+                        <b>Novo {{ form.status.label_tag }}</b>
+                        {{ form.status }}
+                        </div>
+                    </div>
+                    </br>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                        <button type="submit" class="btn botao">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+
+            <footer>
+
+            </footer>
+
+        </div>
+</div>

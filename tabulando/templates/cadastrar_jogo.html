@@ -1,6 +1,6 @@
 {% extends 'template_base.html' %}
-
 {% block content %}
+{% include 'javascript/ajax_nomejogo.html' %}
 </br>
 <h1 class="fonte-outfit">Cadastrar um novo jogo</h1>
 <a class="link" href="{% url 'catalogo' %}">Clique aqui para voltar ao catálogo</a>
@@ -10,12 +10,13 @@
 <form action="{% url 'cadastrar_jogo' %}" method="post">
     {% csrf_token %}
     {% for field in form %}
-        {{ field.errors }}
         {{ field.label_tag }}
         <div class="col-md-3">{{ field }}</div>
+        <div class="alerta-vermelho" id="id_mensagem_erro">&nbsp;</div>
+        <div class="alerta-vermelho">{{ field.errors }}</div>
     {% endfor %}
     <div class="col-lg-7 pt-3 col-lg-offset-3 .col-md-4">
-        <input type="submit" name="submit" value="Entrar" class="btn botao col-xs-8 .col-md-8"/>
+        <input type="submit" name="submit" value="Confirmar" class="btn botao col-xs-8 .col-md-8"/>
     </div>
 </form>
-{% endblock %}
+{% endblock %} 

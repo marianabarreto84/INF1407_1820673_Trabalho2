@@ -16,7 +16,7 @@
 					<div class="form-group col-md-8 p-2">
 						Usuário:
 						{{ form.username }}
-						{{ form.username.errors }}
+						<div class="alerta-vermelho">{{ form.username.errors }}</div>
 					</div>
 				</div>
 
@@ -24,7 +24,7 @@
 					<div class="form-group col-md-8 p-2">
 						Senha:&nbsp;&nbsp;&nbsp;
 						{{ form.password }}
-						{{ form.password.errors }}
+						<div class="alerta-vermelho">{{ form.password.errors }}</div>
 					</div>
 				</div>
 

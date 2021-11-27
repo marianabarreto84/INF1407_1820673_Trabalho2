@@ -48,7 +48,7 @@
                 <ul class="nav nav-pills nav-stacked flex-column">
                     <li class="nav-item">
                         <a class="nav-link {% if request.get_full_path == '/'%}active{% endif %}"
-                            href="#">Página inicial</a>
+                            href="{% url 'pagina_inicial' %}">Página inicial</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.get_full_path == '/faq/'%}active{% endif %}"
@@ -59,8 +59,8 @@
                             href="{% url 'catalogo' %}">Catálogo de Jogos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-                            href="#">Estatísticas</a>
+                        <a class="nav-link {%  if request.get_full_path == '/estatisticas/' %}active{% endif %}"
+                            href="{% url 'estatisticas' %}">Estatísticas</a>
                     </li>
                 </ul>
             </div>

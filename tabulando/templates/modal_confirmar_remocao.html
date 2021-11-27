@@ -1,4 +1,4 @@
-<div class="modal" id="modal_confirmar_remocao" tabindex="-1" role="dialog">
+<div class="modal" id="modal_confirmar_remocao_{{ registro.codigo }}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -6,10 +6,10 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <p>Você tem certeza que deseja excluir o registro? {{ registro.codigo }}</p>
+            <p>Você tem certeza que deseja excluir o registro?</p>
         </div>
         <div class="modal-footer">
-            <form class="form-horizontal" method="post" action="{% url 'deletar_registro' codigo %}">
+            <form class="form-horizontal" method="post" action="{% url 'deletar_registro' registro.codigo %}">
                 {% csrf_token %}
                 <button type="submit" class="btn botao">Confirmar</button>
             </form>
@@ -17,4 +17,4 @@
         </div>
       </div>
     </div>
-  </div>
+</div>

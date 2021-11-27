@@ -10,7 +10,18 @@ O objetivo do site é que o usuário consiga criar e manter um catálogo online 
 
 ## Referências
 1. Material disponibilizado da disciplina INF1407, ministrada pelo professor Alexandre Meslin.
-2. https://developer.mozilla.org/pt-BR/docs/Learn/Server-side/Django/Authentication
-3. https://data-flair.training/blogs/django-send-email/
-4. https://books.agiliq.com/projects/django-orm-cookbook/en/latest/join.html
-5. https://stackoverflow.com/questions/10598940/how-to-rename-items-in-values-in-django
+
+2. Tutorial Django Parte 8: Autenticação de usuário e permissões
+https://developer.mozilla.org/pt-BR/docs/Learn/Server-side/Django/Authentication
+
+3. How to Send Emails in Django?
+https://data-flair.training/blogs/django-send-email/
+
+4. How to perform join operations in django ORM?
+https://books.agiliq.com/projects/django-orm-cookbook/en/latest/join.html
+
+5. How to rename items in values() in Django?
+https://stackoverflow.com/questions/10598940/how-to-rename-items-in-values-in-django
+
+6. Passing value to Bootstrap modal in Django?
+https://stackoverflow.com/questions/13168606/passing-value-to-bootstrap-modal-in-django

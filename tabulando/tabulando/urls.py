@@ -16,21 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
-from . import views
 
 urlpatterns = [
-    path('', views.pagina_inicial, name='pagina_inicial'),
     path('admin/', admin.site.urls),
-    path('perfil/', views.perfil_usuario, name='perfil_usuario'),
-    path('cadastrar_usuario/', views.cadastrar_usuario, name='cadastrar_usuario'),
-    path('usuario_criado/', views.usuario_criado, name='usuario_criado'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('catalogo/', views.catalogo, name='catalogo'),
-    path('adicionar_registro/', views.adicionar_registro, name='adicionar_registro'),
-    path('registro_adicionado/', views.registro_adicionado, name='registro_adicionado'),
-    path('cadastrar_jogo/', views.cadastrar_jogo, name='cadastrar_jogo'),
-    path('jogo_cadastrado/', views.jogo_cadastrado, name='jogo_cadastrado'),
-    path('deletar_registro/<int:registro_codigo>/', views.deletar_registro, name='deletar_registro'),
+    path('', include('projeto.urls')),
 ]
 
 
