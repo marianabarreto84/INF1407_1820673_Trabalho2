@@ -1,0 +1,11 @@
+{% extends 'template_base.html' %}
+
+{% block content %}
+</br>
+<h1 class="fonte-outfit">Perfil do Usuário</h1>
+</br>
+<p><b>Nome Completo:</b> {{ user.first_name }} {{ user.last_name}} </p>
+<p><b>Nome de Usuário:</b> {{user.username }}</p>
+<p><b>E-mail:</b> {{ user.email }} </p>
+<p><a class="link" href="{% url 'password_reset' %}">Alterar a minha senha</a></p>
+{% endblock %}

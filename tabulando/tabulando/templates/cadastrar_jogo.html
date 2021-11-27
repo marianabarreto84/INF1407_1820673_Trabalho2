@@ -1,0 +1,21 @@
+{% extends 'template_base.html' %}
+
+{% block content %}
+</br>
+<h1 class="fonte-outfit">Cadastrar um novo jogo</h1>
+<a class="link" href="{% url 'catalogo' %}">Clique aqui para voltar ao catálogo</a>
+</br>
+
+</br>
+<form action="{% url 'cadastrar_jogo' %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        {{ field.errors }}
+        {{ field.label_tag }}
+        <div class="col-md-3">{{ field }}</div>
+    {% endfor %}
+    <div class="col-lg-7 pt-3 col-lg-offset-3 .col-md-4">
+        <input type="submit" name="submit" value="Entrar" class="btn botao col-xs-8 .col-md-8"/>
+    </div>
+</form>
+{% endblock %}

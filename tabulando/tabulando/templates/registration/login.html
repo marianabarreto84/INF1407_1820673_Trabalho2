@@ -1,39 +1,46 @@
 {% extends 'template_base.html' %}
 {% block content %}
 
-{% if form.errors %}
-    <p>Seu usuário e senha não coincidiram, por favor tente novamente.</p>
-{% endif %}
+<div class="row justify-content-center pt-4">
+	<div class="form-group col-md-6">
+		<div class="jumbotron">
+			
+            <h2 class="text-center cor-fonte-marrom">LOGIN</h2>
 
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Sua conta não tem acesso a essa página. Para proceder, por favor faça login com uma conta que tenha acesso.</p>
-    {% else %}
-    <p>Por favor faça login para visualizar essa página.</p>
-    {% endif %}
-{% endif %}
-<div class="login-centralizado">
-    <h2 class="texto-centralizado cor-fonte-marrom">LOGIN</h2>
-    </br>
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <table class="alinha-form">
-            <tr>
-                <td class="form-padding">Usuário:</td>
-                <td class="form-padding">{{ form.username }}</td>
-            </tr>
-            <tr>
-                <td class="form-padding">Senha:</td>
-                <td class="form-padding">{{ form.password }}</td>
-            </tr>
-        </table>
-        <div class="texto-centralizado">
-        <input class="btn botao" type="submit" value="Login">
-        <input type="hidden" name="next" value="{{ next }}" />
-        </div>
-    </form>
-    </br>
-    <p class="texto-centralizado"><a class="link" href="{% url 'password_reset' %}">Esqueceu a senha?</a></p>
+			<hr class="my-4">
+
+			<form method="post" action="{% url 'login' %}">
+				{% csrf_token %}
+
+				<div class="row justify-content-center">
+					<div class="form-group col-md-8 p-2">
+						Usuário:
+						{{ form.username }}
+						{{ form.username.errors }}
+					</div>
+				</div>
+
+                <div class="row justify-content-center">
+					<div class="form-group col-md-8 p-2">
+						Senha:&nbsp;&nbsp;&nbsp;
+						{{ form.password }}
+						{{ form.password.errors }}
+					</div>
+				</div>
+
+				<div class="text-center">
+					<div class="form-group">
+						<div class="row justify-content-lg-center">
+							<div class="col-lg-7 col-lg-offset-3 .col-md-4">
+								<input type="submit" name="submit" value="Entrar" class="btn botao col-xs-8 .col-md-8"/>
+							</div>
+						</div>
+					</div>
+					<input type="hidden" name="next" value="{{ next }}"/>
+					<p><a class="link" href="{% url 'password_reset' %}">Esqueceu sua senha?</a></p>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
-
 {% endblock %}

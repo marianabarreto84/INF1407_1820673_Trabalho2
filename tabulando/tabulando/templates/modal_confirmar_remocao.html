@@ -1,0 +1,20 @@
+<div class="modal" id="modal_confirmar_remocao" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title fonte-cor-marrom">Confirmar remoção?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Você tem certeza que deseja excluir o registro? {{ registro.codigo }}</p>
+        </div>
+        <div class="modal-footer">
+            <form class="form-horizontal" method="post" action="{% url 'deletar_registro' codigo %}">
+                {% csrf_token %}
+                <button type="submit" class="btn botao">Confirmar</button>
+            </form>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+        </div>
+      </div>
+    </div>
+  </div>

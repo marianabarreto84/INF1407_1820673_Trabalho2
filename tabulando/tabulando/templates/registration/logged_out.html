@@ -1,0 +1,18 @@
+{% extends "template_base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+	<div class="form-group col-md-6">
+		<div class="jumbotron">
+            <h2 class="texto-centralizado cor-fonte-marrom">LOGOUT</h2>
+
+			<p class="lead texto-centralizado">
+				Você efetuou logout. Volte sempre!
+			</p>
+
+            <div class="texto-centralizado">
+				<a class="link" href="{% url 'login' %}">Clique aqui para fazer login novamente</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
