@@ -1,0 +1,1 @@
+web: gunicorn tabulando.wsgi --log-file -
