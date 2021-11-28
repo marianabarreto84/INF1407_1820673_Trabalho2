@@ -162,15 +162,32 @@ def deletar_registro(request, registro_codigo):
     return HttpResponseRedirect(reverse('catalogo'))
 
 
+# @login_required
+# def alterar_registro(request, registro_codigo):
+#     if request.method == "POST":
+#         form = AlteraRegistro(request.POST)
+#         registro = get_object_or_404(Catalogo, codigo=registro_codigo)
+#         if form.is_valid():
+#             registro.status = form.cleaned_data["status"]
+#             registro.save()
+#     return HttpResponseRedirect(reverse('catalogo'))
+
 @login_required
 def alterar_registro(request, registro_codigo):
-    if request.method == "POST":
+    registro = get_object_or_404(Catalogo, codigo=registro_codigo)
+    if request.method == 'POST':
         form = AlteraRegistro(request.POST)
-        registro = get_object_or_404(Catalogo, codigo=registro_codigo)
         if form.is_valid():
             registro.status = form.cleaned_data["status"]
             registro.save()
-    return HttpResponseRedirect(reverse('catalogo'))
+            return HttpResponseRedirect(reverse('catalogo'))
+    else:
+        form = AlteraRegistro(initial={'status': registro.status})
+    contexto = {
+        'codigo': registro_codigo,
+        'form': form,
+    }
+    return render(request, "alterar_registro.html", contexto)
 
 
 def verifica_nome_jogo(request):

@@ -1,0 +1,22 @@
+{% extends 'template_base.html' %}
+
+{% block content %}
+</br>
+<h1 class="fonte-outfit">Alterar um registro</h1>
+<a class="link" href="{% url 'catalogo' %}">Clique aqui para voltar ao catálogo</a>
+</br>
+
+</br>
+<form class="form-horizontal" action="{% url 'alterar_registro' codigo %}" method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="form-group col-md-6">
+        {{ form.status.errors }}
+        <b>Novo {{ form.status.label_tag }}</b>
+        {{ form.status }}
+        </div>
+    </div>
+    </br>
+    <button type="submit" class="btn botao">Confirmar</button>
+</form>
+{% endblock %}
