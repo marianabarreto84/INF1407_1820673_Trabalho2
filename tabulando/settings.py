@@ -28,6 +28,8 @@ SECRET_KEY = os.environ.get('TABULANDO_SECRET_KEY', "cg#p$g+j9tax!#a3cup@1$8obt2
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = [
+    'mighty-peak-52335.herokuapp.com', 
+    '127.0.0.1',
 ]
 
 
@@ -148,11 +150,6 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
 
     CSRF_COOKIE_SECURE = True
-
-    ALLOWED_HOSTS = [
-        'localhost',
-        'mighty-peak-52335.herokuapp.com/',
-    ]
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
