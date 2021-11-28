@@ -4,7 +4,7 @@
 </br>
 <h1 class="fonte-outfit">Estatísticas do Usuário</h1>
 </br>
-{% if catalogo > 0 and perms.projeto.pode_ver_estatisticas %}
+{% if catalogo > 0 and perms.projeto.pode_ver_estatisticas and user.is_authenticated %}
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab_registros_por_dia" type="button" role="tab" aria-controls="home" aria-selected="true">Evolução de registros</button>
@@ -41,8 +41,11 @@
 {% elif perms.projeto.pode_ver_estatisticas %}
 <p>Não há nenhum registro presente no catálogo.</p>
 <p>Para criar um registro, clique <a class="link" href="{% url 'adicionar_registro' %}">aqui</a>.</p>
-{% else %}
+{% elif user.is_authenticated %}
 <p>Você não tem acesso para visualizar essa página.</p>
 <p>Para saber mais sobre os privilégios premium, por favor consulte a nossa página de <a class="link" href="{% url 'faq' %}">Perguntas Frequentes</a></p>
+{% else %}
+<p>Você não tem acesso para visualizar essa página.</p>
+<p>Faça o seu <a class="link" href="{% url 'login' %}">login</a> para poder acessá-la.</p>
 {% endif %}
 {% endblock %}
