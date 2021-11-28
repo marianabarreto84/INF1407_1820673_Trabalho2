@@ -21,7 +21,7 @@ class CadastraUsuario(forms.Form):
         if User.objects.filter(email=email).count() > 0:
             raise ValidationError(_U('Este email já está associado a um usuário.'))
         return email
-    
+
     def clean_username(self):
         cleaned_data = super().clean()
         username = cleaned_data.get('username')

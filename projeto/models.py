@@ -7,7 +7,7 @@ import datetime
 
 class Jogo(models.Model):
     codigo = models.BigAutoField(primary_key=True)
-    nome = models.CharField(max_length=200)
+    nome = models.CharField(max_length=200, unique=True)
     min_jogadores = models.IntegerField()
     max_jogadores = models.IntegerField()
     idade_minima = models.IntegerField(blank=True, null=True)
@@ -21,13 +21,6 @@ class Jogo(models.Model):
         db_table = 'jogo'
 
 
-"""
-class Editora(models.Model):
-    codigo = models.BigIntegerField()
-    nome = models.CharField(max_length=200)
-"""
-
-
 class Catalogo(models.Model):
     codigo = models.BigAutoField(primary_key=True)
     jogo = models.ForeignKey(Jogo, blank=True, null=True, on_delete=models.CASCADE)
@@ -39,4 +32,5 @@ class Catalogo(models.Model):
         permissions = [
             ('pode_ver_estatisticas', "Pode ver estatísticas"),
         ]
+        unique_together = ('jogo', 'usuario')
         db_table = 'catalogo'
