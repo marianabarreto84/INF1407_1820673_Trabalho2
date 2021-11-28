@@ -1,6 +1,11 @@
 {% extends 'template_base.html' %}
 {% block content %}
-
+{% if form.errors %}
+<div class="alert alert-danger" role="alert">
+	Falha ao fazer login. Seu usuário ou senha podem estar incorretos, ou sua conta pode estar inativa. Se você acha que
+	isso é um erro, por favor entre em <a class="link" href="{% url 'contato' %}">contato</a>.
+</div>
+{% endif %}
 <div class="row justify-content-center pt-4">
 	<div class="form-group col-md-6">
 		<div class="jumbotron">
