@@ -9,6 +9,8 @@
     Chega de ficar sem saber onde estão os seus jogos, está na hora de organizar sua coleção online!
     Um site que permite adicionar e remover jogos, informar quais jogos você têm, quais você deseja e quais você doou, vendeu ou até emprestou.
     Além disso, o Tabulando possui uma base de dados de jogos em constante crescimento. 
-    Crie a sua conta e comece já o seu catálogo!
 </p>
+{% if not user.is_authenticated %}
+<a class="link" href="{% url 'cadastro_usuario' %}">Crie a sua conta aqui e comece já o seu catálogo!</a>
+{% endif %}
 {% endblock %}
