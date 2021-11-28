@@ -151,7 +151,7 @@ if not DEBUG:
 
     ALLOWED_HOSTS = [
         'localhost',
-        'https://mighty-peak-52335.herokuapp.com/',
+        'mighty-peak-52335.herokuapp.com/',
     ]
 
 # Heroku: Update database configuration from $DATABASE_URL.
