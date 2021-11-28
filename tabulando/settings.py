@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('TABULANDO_SECRET_KEY', "cg#p$g+j9tax!#a3cup@1$8obt2
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = [
-    'mighty-peak-52335.herokuapp.com', 
+    'tabulando.herokuapp.com',
     '127.0.0.1',
 ]
 
