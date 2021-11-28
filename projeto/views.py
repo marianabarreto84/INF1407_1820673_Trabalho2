@@ -75,6 +75,7 @@ def catalogo(request):
     catalogo = catalogo.annotate(editora=F('jogo__editora'))
     catalogo = catalogo.annotate(codigo_jogo=F('jogo__codigo'))
     catalogo = catalogo.values('codigo', 'nome_jogo', 'editora', 'data_insercao', 'status', 'codigo_jogo')
+    catalogo = catalogo.order_by('-data_insercao')
 
     for registro in catalogo:
         registro["status_str"] = retorna_status(registro['status'])
