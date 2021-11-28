@@ -229,7 +229,7 @@ def historico_jogos(request):
 def alterar_jogo(request, jogo_codigo):
     jogo = get_object_or_404(Jogo, codigo=jogo_codigo)
     if request.method == 'POST':
-        form = AlteraJogo(request.POST, usuario=request.user)
+        form = AlteraJogo(request.POST, codigo=jogo_codigo)
         if form.is_valid():
             jogo.nome = form.cleaned_data['nome']
             jogo.editora = form.cleaned_data['editora']

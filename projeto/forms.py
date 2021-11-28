@@ -107,8 +107,8 @@ class CadastraJogo(forms.Form):
 
 # Esse não tem a opção de não deixar alterar por causa de um jogo já existente
 class AlteraJogo(forms.Form):
-    def __init__(self, *args, **kwargs):  # Importando o usuário para não deixar alterar o nome de um jogo para um jogo que já esteja cadastrado por outro usuário
-        self.user = kwargs.pop('usuario', None)
+    def __init__(self, *args, **kwargs):  # Importando o usuário para conseguir ver se um registro com o mesmo jogo já foi feito
+        self.codigo = kwargs.pop('codigo', None)
         super(AlteraJogo, self).__init__(*args, **kwargs)
     nome = forms.CharField(label='Nome do Jogo', max_length=150, widget=forms.TextInput(attrs={'class': 'form-control'}))
     editora = forms.CharField(label='Editora', max_length=150, widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -121,8 +121,8 @@ class AlteraJogo(forms.Form):
         nome = cleaned_data.get('nome')
         if nome[0] != nome[0].upper():
             raise ValidationError(_U('O nome do jogo deve ser iniciado com letra maiúscula.'))
-        registros_associados = Catalogo.objects.filter(jogo__nome=nome).all()
-        if len(registros_associados) > 0:
+        registros_associados = Catalogo.objects.filter(jogo__nome=nome).exclude(jogo__codigo=self.codigo).all()
+        if len(registros_associados) > 1:
             raise ValidationError(_U('O nome do jogo já existe.'))
         return nome
 
