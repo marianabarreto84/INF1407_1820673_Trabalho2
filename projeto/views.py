@@ -96,7 +96,7 @@ def adicionar_registro(request):
         return HttpResponseRedirect(reverse('pagina_inicial'))
 
     if request.method == 'POST':
-        form = AdicionaRegistro(request.POST)
+        form = AdicionaRegistro(request.POST, usuario=request.user)
 
         if form.is_valid():
             nome_jogo = form.cleaned_data["nome"]

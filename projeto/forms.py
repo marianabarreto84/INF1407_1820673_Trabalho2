@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _U
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.models import User
-from projeto.models import Jogo
+from projeto.models import Jogo, Catalogo
 
 
 class CadastraUsuario(forms.Form):
@@ -32,6 +32,10 @@ class CadastraUsuario(forms.Form):
 
 
 class AdicionaRegistro(forms.Form):
+    def __init__(self, *args, **kwargs):  # Importando o usuário para conseguir ver se um registro com o mesmo jogo já foi feito
+        self.user = kwargs.pop('usuario', None)
+        super(AdicionaRegistro, self).__init__(*args, **kwargs)
+
     nome = forms.CharField(label='Nome do Jogo', max_length=150, widget=forms.TextInput(attrs={'class': 'form-control'}))
     opcoes_status = (
         (1, "Tenho"),
@@ -45,6 +49,8 @@ class AdicionaRegistro(forms.Form):
     def clean_nome(self):
         cleaned_data = super().clean()
         nome = cleaned_data.get('nome')
+        if Catalogo.objects.filter(jogo__nome=nome, usuario_id=self.user.id).count() > 0:
+            raise ValidationError(_U('Este registro já foi feito. Caso queira alterar seu status, faça isso na página \"Catálogo\".'))
         if Jogo.objects.filter(nome=nome).count() == 0:
             raise ValidationError(_U('Este jogo ainda não foi cadastrado. Por favor, faça o cadastro antes de adicionar o registro.'))
         return nome
