@@ -19,4 +19,8 @@
     </br>
     <button type="submit" class="btn botao">Confirmar</button>
 </form>
+
+{% if pode_deletar %}
+<a class="link" href="{% url 'deletar_jogo' codigo %}">Clique aqui para deletar o jogo</a>
+{% endif %}
 {% endblock %}

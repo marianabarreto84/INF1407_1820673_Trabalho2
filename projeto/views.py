@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 
 from django.contrib.auth.models import User
 from django.db.models import F
-from projeto.forms import CadastraUsuario, CadastraJogo, AdicionaRegistro, AlteraRegistro
+from projeto.forms import CadastraUsuario, CadastraJogo, AdicionaRegistro, AlteraRegistro, AlteraJogo
 
 from projeto.models import Catalogo, Jogo
 
@@ -163,7 +163,6 @@ def deletar_registro(request, registro_codigo):
 
 
 @login_required
-@permission_required('projeto.pode_ver_estatisticas')
 def alterar_registro(request, registro_codigo):
     registro = get_object_or_404(Catalogo, codigo=registro_codigo)
     if request.method == 'POST':
@@ -189,6 +188,8 @@ def verifica_nome_jogo(request):
     return JsonResponse(resposta)
 
 
+@login_required
+@permission_required('projeto.pode_ver_estatisticas')
 def estatisticas(request):
     catalogo = Catalogo.objects.filter(usuario_id=request.user.id).all()
     dados_registros, labels_registros = grafico_registros_por_dia(request.user.id)
@@ -206,9 +207,57 @@ def estatisticas(request):
     return render(request, "estatisticas.html", contexto)
 
 
+@login_required
 def pagina_jogo(request, codigo):
     jogo = get_object_or_404(Jogo, codigo=codigo)
     contexto = {
         'jogo': jogo,
     }
     return render(request, "pagina_jogo.html", contexto)
+
+
+@login_required
+def historico_jogos(request):
+    jogos = Jogo.objects.order_by('nome').all()
+    contexto = {
+        'jogos': jogos,
+    }
+    return render(request, "historico_jogos.html", contexto)
+
+
+@login_required
+def alterar_jogo(request, jogo_codigo):
+    jogo = get_object_or_404(Jogo, codigo=jogo_codigo)
+    if request.method == 'POST':
+        form = AlteraJogo(request.POST, usuario=request.user)
+        if form.is_valid():
+            jogo.nome = form.cleaned_data['nome']
+            jogo.editora = form.cleaned_data['editora']
+            jogo.min_jogadores = form.cleaned_data['min_jogadores']
+            jogo.max_jogadores = form.cleaned_data['max_jogadores']
+            jogo.idade_minima = form.cleaned_data['idade_minima']
+            jogo.save()
+            return HttpResponseRedirect(reverse('historico_jogos'))
+    else:
+        form = AlteraJogo(initial={'nome': jogo.nome, 'editora': jogo.editora, 'min_jogadores': jogo.min_jogadores, 'max_jogadores': jogo.max_jogadores, 'idade_minima': jogo.idade_minima})
+    pode_deletar = True
+    registros_associados = Catalogo.objects.filter(jogo__nome=jogo.nome).all()
+    if len(registros_associados) > 0:
+        pode_deletar = False
+    contexto = {
+        'codigo': jogo_codigo,
+        'form': form,
+        'pode_deletar': pode_deletar,
+    }
+    return render(request, "alterar_jogo.html", contexto)
+
+
+@login_required
+def deletar_jogo(request, jogo_codigo):
+    if not request.user.is_staff:
+        return HttpResponseRedirect(reverse('catalogo'))
+    jogo = get_object_or_404(Jogo, codigo=jogo_codigo)
+    registros = Catalogo.objects.filter(jogo_id=jogo_codigo).all()
+    if len(registros) == 0:
+        jogo.delete()
+    return HttpResponseRedirect(reverse('historico_jogos'))

@@ -62,6 +62,10 @@
                         <a class="nav-link {% if request.get_full_path == '/catalogo/'%}active{% endif %}"
                             href="{% url 'catalogo' %}">Catálogo de Jogos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.get_full_path == '/historico_jogos/'%}active{% endif %}"
+                            href="{% url 'historico_jogos' %}">Histórico de Jogos</a>
+                    </li>
                     {% if perms.projeto.pode_ver_estatisticas %}
                     <li class="nav-item">
                         <a class="nav-link {%  if request.get_full_path == '/estatisticas/' %}active{% endif %}"

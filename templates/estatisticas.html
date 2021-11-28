@@ -46,6 +46,6 @@
 <p>Para saber mais sobre os privilégios premium, por favor consulte a nossa página de <a class="link" href="{% url 'faq' %}">Perguntas Frequentes</a></p>
 {% else %}
 <p>Você não tem acesso para visualizar essa página.</p>
-<p>Faça o seu <a class="link" href="{% url 'login' %}">login</a> para poder acessá-la.</p>
+<p>Faça o seu <a class="link" href="{% url 'login' %}">login</a> para poder acessá-la.</p> <!-- Acabou que nem precisou porque utilzei o login_required-->
 {% endif %}
 {% endblock %}

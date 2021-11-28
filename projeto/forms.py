@@ -103,3 +103,39 @@ class CadastraJogo(forms.Form):
         max_jogadores = cleaned_data.get('max_jogadores')
         if min_jogadores is not None and max_jogadores < min_jogadores:
             self.add_error('max_jogadores', 'O número de jogadores máximo não pode ser menor do que o número mínimo.')
+
+
+# Esse não tem a opção de não deixar alterar por causa de um jogo já existente
+class AlteraJogo(forms.Form):
+    def __init__(self, *args, **kwargs):  # Importando o usuário para não deixar alterar o nome de um jogo para um jogo que já esteja cadastrado por outro usuário
+        self.user = kwargs.pop('usuario', None)
+        super(AlteraJogo, self).__init__(*args, **kwargs)
+    nome = forms.CharField(label='Nome do Jogo', max_length=150, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    editora = forms.CharField(label='Editora', max_length=150, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    idade_minima = forms.IntegerField(label='Idade mínima', widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    min_jogadores = forms.IntegerField(label='Número mínimo de jogadores', widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    max_jogadores = forms.IntegerField(label='Número máximo de jogadores', widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+    def clean_nome(self):
+        cleaned_data = super().clean()
+        nome = cleaned_data.get('nome')
+        if nome[0] != nome[0].upper():
+            raise ValidationError(_U('O nome do jogo deve ser iniciado com letra maiúscula.'))
+        registros_associados = Catalogo.objects.filter(jogo__nome=nome).all()
+        if len(registros_associados) > 0:
+            raise ValidationError(_U('O nome do jogo já existe.'))
+        return nome
+
+    def clean_idade_minima(self):
+        cleaned_data = super().clean()
+        idade_minima = cleaned_data.get('idade_minima')
+        if idade_minima <= 0 and idade_minima >= 130:
+            raise ValidationError(_U('A idade mínima não é válida. A idade deve ser maior do que 0 e menor do que 130.'))
+        return idade_minima
+
+    def clean(self):
+        cleaned_data = super().clean()
+        min_jogadores = cleaned_data.get('min_jogadores')
+        max_jogadores = cleaned_data.get('max_jogadores')
+        if min_jogadores is not None and max_jogadores < min_jogadores:
+            self.add_error('max_jogadores', 'O número de jogadores máximo não pode ser menor do que o número mínimo.')

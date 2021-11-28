@@ -1,0 +1,30 @@
+{% extends 'template_base.html' %}
+
+{% block content %}
+</br>
+<h1 class="fonte-outfit">Alterar um jogo</h1>
+<a class="link" href="{% url 'historico_jogos' %}">Clique aqui para voltar ao histórico</a>
+</br>
+
+</br>
+{% if user.is_staff %}
+    <form action="{% url 'alterar_jogo' codigo %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            {{ field.label_tag }}
+            <div class="col-md-3">{{ field }}</div>
+            <div class="alerta-vermelho">{{ field.errors }}</div>
+        {% endfor %}
+        <div class="col-lg-7 pt-3 col-lg-offset-3 .col-md-4">
+            <input type="submit" name="submit" value="Confirmar" class="btn botao col-xs-8 .col-md-8"/>
+        </div>
+    </form>
+    {% if pode_deletar %}
+    <a class="link" href="{% url 'deletar_jogo' codigo %}">Clique aqui para deletar o jogo</a>
+    {% endif %}
+
+{% else %}
+<p>Você não tem acesso para visualizar essa página.</p>
+<p>Para saber mais sobre os privilégios premium, por favor consulte a nossa página de <a class="link" href="{% url 'faq' %}">Perguntas Frequentes</a></p>
+{% endif %}
+{% endblock %}

@@ -26,6 +26,11 @@ urlpatterns = [
     # Página de Estatísticas
     path('estatisticas/', views.estatisticas, name='estatisticas'),
 
+    # Página de Histórico de Jogos
+    path('historico_jogos/', views.historico_jogos, name='historico_jogos'),
+    path('alterar_jogo/<int:jogo_codigo>/', views.alterar_jogo, name='alterar_jogo'),
+    path('deletar_jogo/<int:jogo_codigo>/', views.deletar_jogo, name='deletar_jogo'),
+
     # AJAX
     path('verifica_nome_jogo', views.verifica_nome_jogo, name='verifica_nome_jogo'),
 ]
