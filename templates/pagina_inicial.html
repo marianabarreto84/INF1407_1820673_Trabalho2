@@ -8,9 +8,9 @@
     O Tabulando.com é um site feito para você, colecionador de jogos de tabuleiro.
     Chega de ficar sem saber onde estão os seus jogos, está na hora de organizar sua coleção online!
     Um site que permite adicionar e remover jogos, informar quais jogos você têm, quais você deseja e quais você doou, vendeu ou até emprestou.
-    Além disso, o Tabulando possui uma base de dados de jogos em constante crescimento. 
+    Além disso, o Tabulando possui uma base de dados de jogos em constante crescimento.
 </p>
 {% if not user.is_authenticated %}
-<a class="link" href="{% url 'cadastro_usuario' %}">Crie a sua conta aqui e comece já o seu catálogo!</a>
+Crie a sua conta <a class="link" href="{% url 'cadastro_usuario' %}">aqui</a> e comece já o seu catálogo, ou faça login <a class="link" href="{% url 'login' %}">aqui!</a>
 {% endif %}
 {% endblock %}
