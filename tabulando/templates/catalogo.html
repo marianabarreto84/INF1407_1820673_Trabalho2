@@ -5,15 +5,15 @@
 <h1 class="fonte-outfit">Catálogo de Jogos</h1>
 </br>
 {% if catalogo %}
-<div class="texto-alinhado-direita">
+<!-- <div class="texto-alinhado-direita">
     <a class="link" href="{% url 'adicionar_registro' %}">
         <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
         </svg>
     </a>
-</div>
+</div> -->
 <div class="table-responsive">
-<table class="texto-centralizado table table-bordered table-hover">
+<table class="table table-bordered table-hover tabela-catalogo">
     <thead class="fundo-marrom-escuro cor-fonte-branca cabecalho-tabela">
         <tr>
             <th> Nome </th>
@@ -53,6 +53,7 @@
     </tbody>
 </table>
 </div>
+{% include "javascript/tabela.html" %}
 {% else %}
 <p>Não há nenhum registro presente no catálogo.</p>
 <p>Para criar um registro, clique <a class="link" href="{% url 'adicionar_registro' %}">aqui</a>.</p>

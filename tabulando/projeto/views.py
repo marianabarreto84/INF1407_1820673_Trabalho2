@@ -19,7 +19,15 @@ def pagina_inicial(request):
     return render(request, "pagina_inicial.html")
 
 
-def cadastrar_usuario(request):
+def faq(request):
+    return render(request, "faq.html")
+
+
+def contato(request):
+    return render(request, "contato.html")
+
+
+def cadastro_usuario(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('pagina_inicial'))
 
@@ -47,7 +55,7 @@ def cadastrar_usuario(request):
     contexto = {
         'form': form
     }
-    return render(request, "cadastrar_usuario.html", contexto)
+    return render(request, "cadastro_usuario.html", contexto)
 
 
 @login_required
@@ -68,13 +76,13 @@ def catalogo(request):
     catalogo = catalogo.annotate(codigo_jogo=F('jogo__codigo'))
     catalogo = catalogo.values('codigo', 'nome_jogo', 'editora', 'data_insercao', 'status', 'codigo_jogo')
 
-    print(catalogo)
-
     for registro in catalogo:
         registro["status_str"] = retorna_status(registro['status'])
 
-    form = AlteraRegistro(initial={'status': registro['status']})
-
+    if len(catalogo) > 0:
+        form = AlteraRegistro(initial={'status': registro['status']})
+    else:
+        form = AlteraRegistro()
     context = {
         'catalogo': catalogo,
         'form': form,
@@ -173,10 +181,12 @@ def verifica_nome_jogo(request):
 
 
 def estatisticas(request):
+    catalogo = Catalogo.objects.filter(usuario_id=request.user.id).all()
     dados_registros, labels_registros = grafico_registros_por_dia(request.user.id)
     dados_editoras, labels_editoras = grafico_editoras_mais_registradas(request.user.id)
     dados_status, labels_status = grafico_status_mais_registrados(request.user.id)
     contexto = {
+        'catalogo': len(catalogo),
         'dados_registros': dados_registros,
         'labels_registros': labels_registros,
         'dados_editoras': dados_editoras,

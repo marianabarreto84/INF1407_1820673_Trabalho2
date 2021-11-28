@@ -1,0 +1,21 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+      $(".tabela-catalogo").DataTable({
+        language: {
+            zeroRecord: 'Não foi encontrado nenhum resultado com esse filtro.',
+            lengthMenu: "Mostrar _MENU_ registros por página",
+            infoFiltered: "(filtrado de um total de _MAX_ registros)",
+            info: "Mostrando _PAGE_ de _PAGES_",
+            search: 'Filtrar:',
+            paginate: {
+                first: 'Primeiro',
+                last: 'Último',
+                next: '<div style="color:rgba(62, 39, 4, 0.864)!important;">Próximo</div>',
+                previous: '<div style="color:rgba(62, 39, 4, 0.864)!important;">Anterior</div>' // infelizmente nao tem como trocar a cor dos botões sem pagar
+            }
+        },
+        aaSorting: [], // desabilita filtro automático na primeira coluna
+        responsive: true,
+      });
+    });
+</script>

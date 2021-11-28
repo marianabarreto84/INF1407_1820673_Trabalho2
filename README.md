@@ -25,3 +25,6 @@ https://stackoverflow.com/questions/10598940/how-to-rename-items-in-values-in-dj
 
 6. Passing value to Bootstrap modal in Django?
 https://stackoverflow.com/questions/13168606/passing-value-to-bootstrap-modal-in-django
+
+7. Page/Paging number color style
+https://datatables.net/forums/discussion/51763/page-paging-number-color-styles

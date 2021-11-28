@@ -154,3 +154,24 @@ a:hover{
     padding-left:25%;
     padding-right:25%;
 }
+
+.tabela-catalogo {
+	text-align: center;
+}
+
+.tabela-catalogo thead tr th {
+	vertical-align: middle;
+}
+
+.page-item .page-link{
+    background-color: var(--bege)!important;
+    border: 1px solid var(--bege)!important;
+}
+
+.page-item.active .page-link {
+    background-color: var(--marrom_escuro) !important;
+    border: 1px solid var(--marrom_escuro)!important;
+}
+.page-link {
+    color: white;
+}

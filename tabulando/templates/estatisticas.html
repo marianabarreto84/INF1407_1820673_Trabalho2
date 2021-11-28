@@ -4,6 +4,7 @@
 </br>
 <h1 class="fonte-outfit">Estatísticas do Usuário</h1>
 </br>
+{% if catalogo > 0 %}
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab_registros_por_dia" type="button" role="tab" aria-controls="home" aria-selected="true">Evolução de registros</button>
@@ -36,6 +37,9 @@
         <div class="centraliza-grafico" id="status_mais_registrados"></div>
     </div>
 </div>
-
 {% include 'javascript/graficos.html' %}
+{% else %}
+<p>Não há nenhum registro presente no catálogo.</p>
+<p>Para criar um registro, clique <a class="link" href="{% url 'adicionar_registro' %}">aqui</a>.</p>
+{% endif %}
 {% endblock %}

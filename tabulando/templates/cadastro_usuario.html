@@ -6,7 +6,7 @@
 		<div class="jumbotron">
             <h2 class="texto-centralizado cor-fonte-marrom">Cadastrar novo usuário</h2>
             </br>
-            <form class="form-horizontal" action="{% url 'cadastrar_usuario' %}" method="post">
+            <form class="form-horizontal" action="{% url 'cadastro_usuario' %}" method="post">
 				{% csrf_token %}
 				{% for field in form %}
 				<div class="row justify-content-center">

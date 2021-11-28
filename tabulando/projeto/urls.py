@@ -3,12 +3,14 @@ from . import views
 
 urlpatterns = [
 
-    # Paginas Iniciais (home, faq, contato, admin)
+    # Paginas Iniciais (home, faq, contato)
     path('', views.pagina_inicial, name='pagina_inicial'),
+    path('faq/', views.faq, name='faq'),
+    path('contato/', views.contato, name='contato'),
 
     # Paginas de Usuário (login, perfil, cadastro, etc...)
     path('perfil/', views.perfil_usuario, name='perfil_usuario'),
-    path('cadastrar_usuario/', views.cadastrar_usuario, name='cadastrar_usuario'),
+    path('cadastro_usuario/', views.cadastro_usuario, name='cadastro_usuario'),
     path('usuario_criado/', views.usuario_criado, name='usuario_criado'),
 
     # Páginas do Catalogo
