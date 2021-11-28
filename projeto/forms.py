@@ -77,6 +77,8 @@ class CadastraJogo(forms.Form):
     def clean_nome(self):
         cleaned_data = super().clean()
         nome = cleaned_data.get('nome')
+        if nome[0] != nome[0].upper():
+            raise ValidationError(_U('O nome do jogo deve ser iniciado com letra maiúscula.'))
         if Jogo.objects.filter(nome=nome).count() > 0:
             raise ValidationError(_U('Este jogo já foi cadastrado. Por favor, faça o cadastro antes de adicionar o registro.'))
         return nome

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 
@@ -162,17 +162,8 @@ def deletar_registro(request, registro_codigo):
     return HttpResponseRedirect(reverse('catalogo'))
 
 
-# @login_required
-# def alterar_registro(request, registro_codigo):
-#     if request.method == "POST":
-#         form = AlteraRegistro(request.POST)
-#         registro = get_object_or_404(Catalogo, codigo=registro_codigo)
-#         if form.is_valid():
-#             registro.status = form.cleaned_data["status"]
-#             registro.save()
-#     return HttpResponseRedirect(reverse('catalogo'))
-
 @login_required
+@permission_required('projeto.pode_ver_estatisticas')
 def alterar_registro(request, registro_codigo):
     registro = get_object_or_404(Catalogo, codigo=registro_codigo)
     if request.method == 'POST':

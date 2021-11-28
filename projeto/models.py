@@ -36,4 +36,7 @@ class Catalogo(models.Model):
     status = models.IntegerField(blank=True, null=True)
 
     class Meta:
+        permissions = [
+            ('pode_ver_estatisticas', "Pode ver estatísticas"),
+        ]
         db_table = 'catalogo'
