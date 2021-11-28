@@ -22,12 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("TABULANDO_SECRET_KEY")
+SECRET_KEY = os.environ.get("TABULANDO_SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+]
 
 
 # Application definition
@@ -121,12 +122,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-'''
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-'''
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / "static",
+    ]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
@@ -137,4 +139,16 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "tabulandosite@gmail.com"
-EMAIL_HOST_PASSWORD = os.environ.get("TABULANDO_SENHA_EMAIL")
+EMAIL_HOST_PASSWORD = os.environ.get("TABULANDO_SENHA_EMAIL", "")
+
+# Produção
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+
+    SESSION_COOKIE_SECURE = True
+
+    CSRF_COOKIE_SECURE = True
+
+    ALLOWED_HOSTS = [
+        'localhost'
+    ]
