@@ -30,11 +30,11 @@
                 <li class="nav-item {% if request.get_full_path == '/'%}active{% endif %}">
                     <a class="nav-link {% if request.get_full_path == '/'%}active{% endif %}" href="{% url 'pagina_inicial' %}">Página Inicial</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'faq' %}">Perguntas Frequentes</a>
+                <li class="nav-item {% if request.get_full_path == '/faq/'%}active{% endif %}">
+                    <a class="nav-link {% if request.get_full_path == '/faq/'%}active{% endif %}" href="{% url 'faq' %}">Perguntas Frequentes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contato' %}">Contato</a>
+                <li class="nav-item {% if request.get_full_path == '/contato/'%}active{% endif %}">
+                    <a class="nav-link {% if request.get_full_path == '/contato/'%}active{% endif %}" href="{% url 'contato' %}">Contato</a>
                 </li>
             </ul>
             <ul class="navbar-nav navbar-login">
