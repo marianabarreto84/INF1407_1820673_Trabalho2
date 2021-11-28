@@ -1,18 +1,17 @@
 {% extends 'template_base.html' %}
 {% block content %}
-{% include 'javascript/ajax_nomejogo.html' %}
+{% include 'javascript/verifica_cadastro_jogo.html' %}
 </br>
 <h1 class="fonte-outfit">Cadastrar um novo jogo</h1>
 <a class="link" href="{% url 'catalogo' %}">Clique aqui para voltar ao catálogo</a>
 </br>
-
-</br>
+<div class="alerta-vermelho" id="id_mensagem_max">&nbsp;</div>
+<div class="alerta-vermelho" id="id_mensagem_erro">&nbsp;</div>
 <form action="{% url 'cadastrar_jogo' %}" method="post">
     {% csrf_token %}
     {% for field in form %}
         {{ field.label_tag }}
         <div class="col-md-3">{{ field }}</div>
-        <div class="alerta-vermelho" id="id_mensagem_erro">&nbsp;</div>
         <div class="alerta-vermelho">{{ field.errors }}</div>
     {% endfor %}
     <div class="col-lg-7 pt-3 col-lg-offset-3 .col-md-4">

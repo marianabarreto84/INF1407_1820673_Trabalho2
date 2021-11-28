@@ -1,0 +1,78 @@
+<script type="text/javascript">
+    onload = function() {
+        this.document.getElementById('id_nome').addEventListener('keyup', function(e){
+        // recupera o campo do formulário
+        var campoNomeJogo = document.getElementById('id_nome');
+        // cria o objeto HTTP Request e reabre a conexão
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("GET", "{% url 'verifica_nome_jogo' %}?nome_jogo=" + encodeURIComponent(campoNomeJogo.value), true);
+
+        var first_child = document.getElementById('id_mensagem_erro').firstChild;
+        var mensagem_erro = "Atenção: o jogo já existe.";
+
+        // funcao de callback
+        xmlhttp.onreadystatechange = function () {
+            if(xmlhttp.status == 200 && xmlhttp.readyState == 4){
+                var resposta = JSON.parse(xmlhttp.responseText);
+                if (resposta.existe){
+                    campoNomeJogo.style = "border 1px solid #FF0000";
+                    document.getElementById('id_mensagem_erro').replaceChild(document.createTextNode(mensagem_erro), first_child);
+                }
+                else{
+                    campoNomeJogo.style = "border 1px solid #00FF00";
+                    if (first_child.data == mensagem_erro){
+                        document.getElementById('id_mensagem_erro').replaceChild(document.createTextNode("\u00A0"), first_child);
+                    }
+                }
+
+            }
+        }
+        // envia o request
+        xmlhttp.send(null);
+        });
+
+        this.document.getElementById('id_max_jogadores').addEventListener('keyup', function(e){
+            // recupera os campos do formulário
+            var campo_max_jogadores = document.getElementById('id_max_jogadores').value;
+            var campo_min_jogadores = document.getElementById('id_min_jogadores').value;
+
+            var first_child = document.getElementById('id_mensagem_erro').firstChild;
+            var mensagem_erro = 'Atenção: o número máximo de jogadores deve ser maior do que o mínimo.'
+
+
+            if (campo_max_jogadores != '' && campo_max_jogadores < campo_min_jogadores){
+                campo_max_jogadores.style = "border 1px solid #FF0000";
+                document.getElementById('id_mensagem_erro').replaceChild(document.createTextNode(mensagem_erro), first_child);
+            }
+            else{
+                campo_max_jogadores.style = "border 1px solid #FF0000";
+                if (first_child.data == mensagem_erro){
+                    document.getElementById('id_mensagem_erro').replaceChild(document.createTextNode("\u00A0"), first_child);
+                }
+            }
+        });
+
+        this.document.getElementById('id_min_jogadores').addEventListener('keyup', function(e){
+            // recupera os campos do formulário
+            var campo_max_jogadores = document.getElementById('id_max_jogadores').value;
+            var campo_min_jogadores = document.getElementById('id_min_jogadores').value;
+
+            var first_child = document.getElementById('id_mensagem_erro').firstChild;
+            var mensagem_erro = 'Atenção: o número máximo de jogadores deve ser maior do que o mínimo.'
+
+            if (campo_max_jogadores != '' && campo_max_jogadores < campo_min_jogadores){
+                campo_max_jogadores.style = "border 1px solid #FF0000";
+                document.getElementById('id_mensagem_erro').replaceChild(document.createTextNode(mensagem_erro), first_child);
+            }
+            else{
+                campo_max_jogadores.style = "border 1px solid #FF0000";
+
+                // Essa comparação não é muito necessária, poderia simplesmente deixar do jeito que está, mas como queria diferenciar nas mínimas ocasiões, acho que fica uma solução melhor.
+                if (first_child.data == mensagem_erro){
+                    document.getElementById('id_mensagem_erro').replaceChild(document.createTextNode("\u00A0"), first_child);
+                }
+            }
+        });
+    };
+</script>
