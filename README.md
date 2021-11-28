@@ -68,6 +68,14 @@ O site é intuitivo e possui uma FAQ que já explica alguns aspectos do site, ma
 (6) Histórico de Jogos: para usuários que não fazem parte da equipe, a página de histórico de jogos mostra todos os jogos cadastrados no site por todos os usuários. É possível filtrar e ordenar a tabela, assim como na página de catálogo de jogos. Além disso, é possível cadastrar um jogo por essa página também. Usuários que fazem parte da equipe podem alterar a informação de qualquer jogo, apertando no símbolo de lápis na coluna "Editar".
 (5) Estatísticas: a página de estatísticas é privada para usuários que estão autenticados e são do tipo "Premium". "Premium" é um grupo de autenticação do Django que possui a permissão de poder ver estatísticas. A página de estatísticas possui três gráficos, um de evolução de registros (mostram a quantidade de registros por dia), a de editoras mais registradas (gráfico de pizza com o percentual das editoras) e um de status mais registrados (mostram o percentual de registros por dia). 
 
+## Próximos passos
+
+Como esse trabalho foi pensado para a disciplina, o foco foi atender aos requisitos propostos para o trabalho, que foram concluídos com sucesso. Mas algumas atualizações inteligentes podem ser feitas em versões posteriores. 
+A primeira é colocar uma tabela apenas para editora, para que essa informação se torne mais uniforme e também que seja garantido que um usuário não fique digitando nome de editora errado e etc. 
+A segunda é colocar outros atributos em Jogo que podem ser interessantes para os jogadores. Até colocar novos atributos em Catálogo seria legal, o usuário poderia dar uma nota por exemplo.
+A terceira, por fim, é aprimorar a página de estatísticas, pois ela ainda pode ser aprimorada. 
+
+
 ## Referências
 1. Material disponibilizado da disciplina INF1407, ministrada pelo professor Alexandre Meslin.
 
