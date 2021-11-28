@@ -5,6 +5,7 @@
 <h1 class="fonte-outfit">Catálogo de Jogos</h1>
 </br>
 {% if catalogo %}
+<!--Acabei tirando esse símbolo de + porque com o datatable eu achei que ia ficar mais difícil pro usuário visualizar e entenderr-->
 <!-- <div class="texto-alinhado-direita">
     <a class="link" href="{% url 'adicionar_registro' %}">
         <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
@@ -12,6 +13,7 @@
         </svg>
     </a>
 </div> -->
+<div class="texto-alinhado-direita"><a class="link" href="{% url 'adicionar_registro' %}">Adicionar um registro</a></div>
 <div class="table-responsive">
 <table class="table table-bordered table-hover tabela-catalogo">
     <thead class="fundo-marrom-escuro cor-fonte-branca cabecalho-tabela">
