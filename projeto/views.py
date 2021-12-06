@@ -182,8 +182,13 @@ def alterar_registro(request, registro_codigo):
 
 def verifica_nome_jogo(request):
     nome_jogo = request.GET.get("nome_jogo", None)
+    existe = Jogo.objects.filter(nome__iexact=nome_jogo).exists()
+    codigo = ''
+    if existe:
+        codigo = Jogo.objects.filter(nome__iexact=nome_jogo).values("codigo").all()[0]["codigo"]
     resposta = {
         'existe': Jogo.objects.filter(nome__iexact=nome_jogo).exists(),
+        'codigo': codigo,
     }
     return JsonResponse(resposta)
 

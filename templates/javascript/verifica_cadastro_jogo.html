@@ -1,39 +1,46 @@
 <script type="text/javascript">
     onload = function() {
         this.document.getElementById('id_nome').addEventListener('keyup', function(e){
-        // recupera o campo do formulário
         var campoNomeJogo = document.getElementById('id_nome');
-        // cria o objeto HTTP Request e reabre a conexão
-        var xmlhttp = new XMLHttpRequest();
 
-        xmlhttp.open("GET", "{% url 'verifica_nome_jogo' %}?nome_jogo=" + encodeURIComponent(campoNomeJogo.value), true);
+        var xmlhttp = new XMLHttpRequest(); // ready state é 0
+
+        // estabele a conexao
+        xmlhttp.open("GET", "{% url 'verifica_nome_jogo' %}?nome_jogo=" + encodeURIComponent(campoNomeJogo.value), true); // ready state é 1, pedido sendo enviado (abre a conexao, informa o metodo e coloca quem é o destinatário)
 
         var first_child = document.getElementById('id_mensagem_erro').firstChild;
         var mensagem_erro = "Atenção: o jogo já existe.";
 
-        // funcao de callback
-        xmlhttp.onreadystatechange = function () {
-            if(xmlhttp.status == 200 && xmlhttp.readyState == 4){
+        var first_child_link = document.getElementById('id_link_jogo').firstChild;
+
+        xmlhttp.onreadystatechange = function () { // funcao de callback, é chamada toda vez que o ready state é alterado.
+            if(xmlhttp.status == 200 && xmlhttp.readyState == 4){ // filtra o status 4, que significa que a operação foi concluída, e a resposta http 200 do objeto XMLHttpRequest
                 var resposta = JSON.parse(xmlhttp.responseText);
                 if (resposta.existe){
                     campoNomeJogo.style = "border 1px solid #FF0000";
                     document.getElementById('id_mensagem_erro').replaceChild(document.createTextNode(mensagem_erro), first_child);
+                    if (resposta.codigo != ''){
+                        var mensagem_link = "<a class=\"link\" href=\"/jogo/";
+                        mensagem_link = mensagem_link + resposta.codigo.toString() + "\">Clique aqui para ser direcionado a página do jogo clicado</a>";
+                        document.getElementById('id_link_jogo').innerHTML = mensagem_link;
+                    }
                 }
                 else{
                     campoNomeJogo.style = "border 1px solid #00FF00";
                     if (first_child.data == mensagem_erro){
                         document.getElementById('id_mensagem_erro').replaceChild(document.createTextNode("\u00A0"), first_child);
+                        document.getElementById('id_link_jogo').replaceChild(document.createTextNode("\u00A0"), first_child_link);
                     }
                 }
 
             }
+            // no else desse if ele altera entre o ready state 2 (headers_received, pedido enviado) e o 3 (baixando e responseText contém os dados parciais, pedido sendo processado)
         }
-        // envia o request
-        xmlhttp.send(null);
+
+        xmlhttp.send(null); // envia o pedido pro servidor e o servidor pega alguma coisa
         });
 
         this.document.getElementById('id_max_jogadores').addEventListener('keyup', function(e){
-            // recupera os campos do formulário
             var campo_max_jogadores = document.getElementById('id_max_jogadores').value;
             var campo_min_jogadores = document.getElementById('id_min_jogadores').value;
 
@@ -54,7 +61,6 @@
         });
 
         this.document.getElementById('id_min_jogadores').addEventListener('keyup', function(e){
-            // recupera os campos do formulário
             var campo_max_jogadores = document.getElementById('id_max_jogadores').value;
             var campo_min_jogadores = document.getElementById('id_min_jogadores').value;
 
